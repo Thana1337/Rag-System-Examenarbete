@@ -4,7 +4,6 @@ using Azure.Messaging.ServiceBus;
 using Common;
 using EmbeddingService;
 using EmbeddingService.Services;
-using EmbeddingService.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;

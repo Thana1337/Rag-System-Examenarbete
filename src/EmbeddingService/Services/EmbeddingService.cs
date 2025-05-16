@@ -52,6 +52,7 @@ namespace EmbeddingService.Services
                 var metadata = new Dictionary<string, object>
                 {
                     ["docId"] = evt.DocumentId,
+                    ["text"] = chunks[i],
                     ["chunkIndex"] = i
                 };
                 await _pinecone.UpsertAsync($"{evt.DocumentId}_c{i}", vector, metadata);

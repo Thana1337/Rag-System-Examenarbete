@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Common;
 using Microsoft.Extensions.Options;
-using EmbeddingService.Settings;
 
 namespace EmbeddingService.Services
 {
@@ -21,7 +21,7 @@ namespace EmbeddingService.Services
         {
             var body = new
             {
-                @namespace = "vectors",
+                @namespace = _settings.Namespace,
                 vectors = new[]
                 {
                     new { id, values, metadata }

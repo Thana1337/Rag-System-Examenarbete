@@ -3,8 +3,8 @@ using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using EmbeddingService.Settings;
 using System.Text.Json;
+using Common;
 
 namespace EmbeddingService.Services
 {
@@ -28,12 +28,12 @@ namespace EmbeddingService.Services
         {
             var req = new
             {
-                model = _cfg.Model,
+                model = _cfg.EmbedModel,
                 prompt = text
             };
 
             _logger.LogInformation("Embedding request → model={Model}, len={Len}",
-                _cfg.Model, text.Length);
+                _cfg.EmbedModel, text.Length);
 
             using var resp = await _http.PostAsJsonAsync("/api/embeddings", req, ct);
             var raw = await resp.Content.ReadAsStringAsync(ct);
