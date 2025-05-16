@@ -36,7 +36,7 @@ namespace EmbeddingService.Services
             _logger.LogInformation("Document {Id} → {Count} chunks",
                 evt.DocumentId, chunks.Count);
 
-            // Optional: inspect chunks locally
+            
             var folder = Path.Combine(Path.GetTempPath(), "rag_chunks", evt.DocumentId);
             Directory.CreateDirectory(folder);
             for (int i = 0; i < chunks.Count; i++)
