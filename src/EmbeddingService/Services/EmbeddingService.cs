@@ -13,15 +13,18 @@ namespace EmbeddingService.Services
     {
         private readonly IPineconeClient _pinecone;
         private readonly IChunkingService _chunker;
+        private readonly IOllamaEmbedder _embedder;
         private readonly ILogger<EmbeddingService> _logger;
 
         public EmbeddingService(
             IPineconeClient pinecone,
             IChunkingService chunker,
+            IOllamaEmbedder embedder,
             ILogger<EmbeddingService> logger)
         {
             _pinecone = pinecone;
             _chunker = chunker;
+            _embedder = embedder;
             _logger = logger;
         }
 
@@ -41,11 +44,10 @@ namespace EmbeddingService.Services
                     Path.Combine(folder, $"chunk_{i}.txt"),
                     chunks[i], ct);
 
-            // TODO: replace dummy embedding with real embedder call
+            
             for (int i = 0; i < chunks.Count; i++)
             {
-                // e.g. var vector = await _embedder.EmbedAsync(chunks[i]);
-                float[] vector = Enumerable.Repeat(0.5f, 768).ToArray();
+                float[] vector = await _embedder.EmbedAsync(chunks[i], ct);
 
                 var metadata = new Dictionary<string, object>
                 {

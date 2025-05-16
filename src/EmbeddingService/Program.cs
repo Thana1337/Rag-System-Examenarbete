@@ -52,6 +52,27 @@ builder.Services.AddHttpClient<IPineconeClient, PineconeClient>((sp, http) =>
         .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
+// Ollama embedder
+builder.Services.Configure<OllamaSettings>(
+    builder.Configuration.GetSection("OllamaSettings"));
+
+builder.Services.AddHttpClient<IOllamaEmbedder, OllamaEmbedder>((sp, http) =>
+{
+    var cfg = sp.GetRequiredService<IOptions<OllamaSettings>>().Value;
+    var baseUrl = cfg.BaseUrl?.Trim() ?? "";
+
+    // If no scheme, assume http
+    if (!baseUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+        !baseUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+    {
+        baseUrl = "http://" + baseUrl;
+    }
+
+    http.BaseAddress = new Uri(baseUrl, UriKind.Absolute);
+    http.DefaultRequestHeaders.Accept
+        .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+});
+
 // Chunking service
 builder.Services.AddSingleton<IChunkingService, ChunkingService>();
 
