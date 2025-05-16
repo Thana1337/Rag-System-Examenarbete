@@ -28,7 +28,7 @@ builder.Configuration
 //        new DefaultAzureCredential());
 //}
 
-// --- Azure Blob Storage ---
+//Azure Blob Storage
 builder.Services.Configure<AzureStorageSettings>(
     builder.Configuration.GetSection("AzureStorage"));
 builder.Services.AddSingleton(sp =>
@@ -37,7 +37,7 @@ builder.Services.AddSingleton(sp =>
     return new BlobServiceClient(cfg.ConnectionString);
 });
 
-// --- Azure Service Bus (Queue) ---
+//Azure Service Bus
 builder.Services.Configure<ServiceBusSettings>(
     builder.Configuration.GetSection("AzureServiceBus"));
 builder.Services.AddSingleton(sp =>
@@ -52,7 +52,9 @@ builder.Services.AddSingleton(sp =>
     return client.CreateSender(cfg.QueueName);
 });
 
-// --- MVC, Swagger, CORS ---
+
+
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -61,6 +63,14 @@ builder.Services.AddCors(opts =>
         policy.AllowAnyHeader()
               .AllowAnyMethod()
               .AllowAnyOrigin()));
+
+builder.Services.AddCors(opts =>
+  opts.AddDefaultPolicy(pb =>
+    pb.WithOrigins(CorsSettings.AllowedOrigins)
+      .AllowAnyHeader()
+      .AllowAnyMethod()
+  )
+);
 
 var app = builder.Build();
 

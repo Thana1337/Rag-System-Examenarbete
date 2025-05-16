@@ -79,4 +79,5 @@ builder.Services.AddSingleton<IChunkingService, ChunkingService>();
 builder.Services.AddSingleton<IEmbeddingService, EmbeddingService.Services.EmbeddingService>();
 builder.Services.AddHostedService<EmbeddingWorker>();
 
+
 await builder.Build().RunAsync();

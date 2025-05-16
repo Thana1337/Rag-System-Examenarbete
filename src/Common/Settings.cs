@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Common
 {
+    public static class CorsSettings
+    {
+        public static readonly string[] AllowedOrigins ={"http://localhost:3000"}; //Frontend url
+    }
     public class AzureStorageSettings
     {
         public string ConnectionString { get; set; } = string.Empty;

@@ -77,6 +77,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(opts =>
+  opts.AddDefaultPolicy(pb =>
+    pb.WithOrigins(CorsSettings.AllowedOrigins)
+      .AllowAnyHeader()
+      .AllowAnyMethod()
+  )
+);
+
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
