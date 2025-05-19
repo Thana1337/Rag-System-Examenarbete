@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Mono&family=Old+Standard+TT:wght@400;700&family=Mr+Dafoe&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+  html, body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    height: 100%;
+    background-color: #1A1A1A;
+    scrollbar-width: none;         
+    -ms-overflow-style: none;
+    cursor: none;
+    
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+.chat-scrollbar {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.5) transparent;
+  margin: 5px;
+}
+
+/* WebKit browsers */
+.chat-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 2px;
+}

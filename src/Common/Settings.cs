@@ -8,7 +8,10 @@ namespace Common
 {
     public static class CorsSettings
     {
-        public static readonly string[] AllowedOrigins ={"http://localhost:3000"}; //Frontend url
+        public static readonly string[] AllowedOrigins =
+        {
+        "http://localhost:5173" 
+    };
     }
     public class AzureStorageSettings
     {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace UploadService.Models
@@ -6,7 +7,7 @@ namespace UploadService.Models
     public class UploadFileRequest
     {
         [Required]
-        [Display(Name = "file")]
-        public IFormFile File { get; set; } = default!;
+        [FromForm(Name = "files")]
+        public List<IFormFile> Files { get; set; } = default!;
     }
 }

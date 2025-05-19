@@ -42,39 +42,41 @@ namespace QueryService.Services
             var matches = await _pinecone.QueryAsync(qVec, topK: 5, @namespace: _namespace);
 
             //Build prompt from chunk texts
-            var sb = new StringBuilder()
-                .AppendLine("Use the following context to answer:");
+
+            var sb = new StringBuilder();
+
+          
+            sb.AppendLine("You are a helpful AI assistant.  ")
+              .AppendLine("Always format your answers to be as clear and scannable as possible:")
+              .AppendLine("- Use markdown headings (e.g. `#`, `##`) for main sections")
+              .AppendLine("- Use bullet points (`-`) for lists of items or key points")
+              .AppendLine("- Use numbered steps (`1.`, `2.`, …) for any procedural instructions")
+              .AppendLine("- Use **bold** or *italic* for emphasis")
+              .AppendLine();
+
 
             foreach (var match in matches)
             {
                 if (match.Metadata.TryGetValue("text", out var raw))
                 {
-                    string chunkText;
-                    switch (raw)
+                    string chunkText = raw switch
                     {
-                        case string s:
-                            chunkText = s;
-                            break;
-                        case JsonElement je
-                            when je.ValueKind == JsonValueKind.String:
-                            chunkText = je.GetString()!;
-                            break;
-                        default:
-                            chunkText = raw?.ToString() ?? "";
-                            break;
-                    }
+                        string s => s,
+                        JsonElement je when je.ValueKind == JsonValueKind.String
+                            => je.GetString()!,
+                        _ => raw?.ToString() ?? ""
+                    };
 
-                    sb.AppendLine(chunkText)
-                      .AppendLine("----");
-                }
-                else
-                {
-                    _logger.LogWarning("Match {Id} has no text metadata", match.Id);
+                    sb.AppendLine(chunkText.Trim())
+                      .AppendLine("---");
                 }
             }
 
-            sb.AppendLine($"Question: {question}")
-              .AppendLine("Answer:");
+            
+            sb.AppendLine($"**Question:** {question}")
+              .AppendLine()
+              .AppendLine("**Answer:**")
+              .AppendLine();
 
             var prompt = sb.ToString();
 

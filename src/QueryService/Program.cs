@@ -9,6 +9,17 @@ using QueryService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactDev", policy =>
+    {
+        policy
+          .WithOrigins(Common.CorsSettings.AllowedOrigins)
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+    });
+});
+
 //Configuration sources
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -77,15 +88,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(opts =>
-  opts.AddDefaultPolicy(pb =>
-    pb.WithOrigins(CorsSettings.AllowedOrigins)
-      .AllowAnyHeader()
-      .AllowAnyMethod()
-  )
-);
 
 var app = builder.Build();
+app.UseCors("AllowReactDev");
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();

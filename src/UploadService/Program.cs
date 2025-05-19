@@ -9,6 +9,17 @@ using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactDev", policy =>
+    {
+        policy
+          .WithOrigins(Common.CorsSettings.AllowedOrigins)
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+    });
+});
+
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -58,22 +69,8 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(opts =>
-    opts.AddDefaultPolicy(policy =>
-        policy.AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowAnyOrigin()));
-
-builder.Services.AddCors(opts =>
-  opts.AddDefaultPolicy(pb =>
-    pb.WithOrigins(CorsSettings.AllowedOrigins)
-      .AllowAnyHeader()
-      .AllowAnyMethod()
-  )
-);
-
 var app = builder.Build();
-
+app.UseCors("AllowReactDev");
 // Middleware pipeline
 if (app.Environment.IsDevelopment())
 {
@@ -81,7 +78,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
-app.UseCors();
 app.MapControllers();
 app.Run();
