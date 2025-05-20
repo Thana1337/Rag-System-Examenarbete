@@ -18,7 +18,7 @@ const pageVariants = {
   exit:    { opacity: 0, y: -20 }
 };
 
-const pageTransition = { duration: 0.5, ease: 'easeInOut' };
+const pageTransition = { duration: 0.1, ease: 'easeInOut' };
 
 function AnimatedRoutes() {
   const location = useLocation();

@@ -17,7 +17,7 @@ export default function BottomNav() {
     <motion.nav
       initial={{ y: '-100vh', scale: 0.2, opacity: 0 }}
       animate={{ y: 0,       scale: 1,   opacity: 1 }}
-      transition={{ duration: 0.5, delay: 1.5 , dropSpring}}
+      transition={{ duration: 1, delay: 2 , dropSpring}}
       
       className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-40 overflow-hidden"
     >

@@ -6,16 +6,16 @@ import BackButton from '../BackButton';
 const headerVariants = {
   initial: {
     height: '120vh',
-    backgroundColor: '#000',
+    backgroundColor: '#000000',
   },
   animate: {
     height: '4rem',
     backgroundColor: '#1A1A1A',
     transition: {
-      duration: 1.5,
+      duration: 2.5,
       ease: 'easeInOut',
       when: 'beforeChildren',
-      staggerChildren: 0.2,
+      staggerChildren: 0.1,
     },
   },
 };
