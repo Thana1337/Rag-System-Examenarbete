@@ -18,7 +18,7 @@ export default function MessageList({ messages, loading }) {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col flex-1 overflow-y-auto p-6 space-y-4 chat-scrollbar"
+      className="flex flex-col flex-1 overflow-y-auto p-6 space-y-4 chat-scrollbar z-30"
     >
       {messages.map((m, i) => (
         <MessageBubble

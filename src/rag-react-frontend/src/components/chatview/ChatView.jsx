@@ -52,10 +52,10 @@ export default function ChatView() {
   };
 
   return (
-    <motion.div className="flex flex-col items-center justify-center mt-20 overflow-hidden ">
-      <BackButton/>
+    <div className="flex flex-col items-center justify-center mt-20 overflow-hidden">
+      
 
-      <div className="flex container flex-col w-full max-w-6xl h-[65vh] bg-white/5 rounded-2xl shadow-xl">
+      <div className="flex container flex-col w-full max-w-6xl h-[65vh] rounded-2xl shadow-xl z-30" style={{backgroundColor:"#313131"}}>
         <MessageList
           messages={messages}
           loading={loading}
@@ -70,6 +70,6 @@ export default function ChatView() {
           loading={loading}
         />
       </div>
-    </motion.div>
+    </div>
   );
 }

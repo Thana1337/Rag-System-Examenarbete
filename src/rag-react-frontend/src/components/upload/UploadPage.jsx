@@ -2,9 +2,10 @@
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import BackButton from '../BackButton';
 
 export default function UploadPage() {
-  const [files, setFiles]           = useState([]);      // array of File
+  const [files, setFiles]           = useState([]);      
   const [uploading, setUploading]   = useState(false);
   const [message, setMessage]       = useState('');
   const [isDragging, setIsDragging] = useState(false);
@@ -74,7 +75,7 @@ export default function UploadPage() {
   return (
     <section className="flex items-center justify-center h-[80vh] overflow-hidden">
       <div
-        className="container mx-auto px-4 flex flex-col items-center text-center space-y-6"
+        className="container mx-auto px-4 flex flex-col items-center text-center space-y-6 z-30"
         style={{ fontFamily: "'Space Mono', monospace" }}
       >
         <motion.h1
@@ -99,8 +100,8 @@ export default function UploadPage() {
         <motion.div
           className={`w-full max-w-lg border-2 rounded-lg p-8 cursor-pointer
             ${isDragging
-              ? 'border-white bg-white/20'
-              : 'border-white/50 bg-transparent'}
+              ? 'border-white bg-[#484848]'
+              : 'border-white/50 bg-[#121212]'}
           `}
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -147,12 +148,12 @@ export default function UploadPage() {
           onClick={handleUpload}
           disabled={files.length === 0 || uploading}
           className={`
-            px-6 py-3 rounded-md font-medium
+            px-6 py-3 rounded-md font-medium text-white transition-colors
             ${uploading
-              ? 'bg-gray-500 text-white cursor-not-allowed'
+              ? 'bg-gray-500 cursor-not-allowed'
               : files.length > 0
-                ? 'bg-black/30 text-white hover:bg-black/50'
-                : 'bg-white/10 text-white cursor-not-allowed'
+                ? 'bg-[#121212] hover:bg-[#484848]'
+                : 'bg-[#121212] opacity-50 cursor-not-allowed'
             }
           `}
           initial={{ scale: 0.9, opacity: 0 }}
@@ -168,7 +169,7 @@ export default function UploadPage() {
             className="text-white mt-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.4 }}
+            transition={{ duration: 0.4 }}
           >
             {message}
           </motion.div>

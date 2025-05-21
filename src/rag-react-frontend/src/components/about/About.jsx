@@ -1,6 +1,7 @@
 // src/components/About.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
+import BackButton from '../BackButton';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -42,6 +43,7 @@ export default function About() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
         >
+          
           <h2 className="text-4xl font-bold text-white">
             About Our RAG System
           </h2>

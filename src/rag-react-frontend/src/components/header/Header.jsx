@@ -1,57 +1,48 @@
 // src/components/Header.jsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import BackButton from '../BackButton';
 
-const headerVariants = {
-  initial: {
-    height: '120vh',
-    backgroundColor: '#000000',
-  },
-  animate: {
-    height: '4rem',
-    backgroundColor: '#1A1A1A',
-    transition: {
-      duration: 2.5,
-      ease: 'easeInOut',
-      when: 'beforeChildren',
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const childVariants = {
-  initial: { opacity: 0, y: -10 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
-};
+let headerPlayed = false;
 
 export default function Header() {
+  const shouldAnimate = !headerPlayed;
+  useEffect(() => {
+    if (shouldAnimate) headerPlayed = true;
+  }, [shouldAnimate]);
+
+  // match your scrambleDuration of 5s
+  const delay = shouldAnimate ? 4 : 0;
+
   return (
     <motion.header
-      variants={headerVariants}
-      initial="initial"
-      animate="animate"
-      className="overflow-hidden w-full"
+      // only use initial/animate on first load
+      initial={shouldAnimate ? { y: -50, opacity: 0 } : undefined}
+      animate={shouldAnimate ? { y: 0, opacity: 1 } : undefined}
+      transition={
+        shouldAnimate
+          ? { delay, duration: 1.2, ease: 'easeOut' }
+          : {}
+      }
+      className="relative z-20 overflow-hidden w-full h-16"
     >
       <div className="container mx-auto flex items-center justify-between px-8 h-full">
-        <motion.div variants={childVariants} className="text-xl italic flex gap-1 text-white">
+        <div className="text-xl italic flex gap-1 text-white">
           <p style={{ fontFamily: "'Space Mono', monospace" }}>
             Examensarbete.
           </p>
           <p style={{ fontFamily: "'Old Standard TT', serif" }}>
             rag-framework.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.button
-          variants={childVariants}
+        <button
           onClick={() => (window.location.href = '/')}
           className="text-4xl font-normal focus:outline-none text-white"
-          style={{ fontFamily: "'Mr Dafoe', cursive",  }}
+          style={{ fontFamily: "'Mr Dafoe', cursive" }}
           aria-label="Go to homepage"
         >
           TS
-        </motion.button>
+        </button>
       </div>
     </motion.header>
   );
