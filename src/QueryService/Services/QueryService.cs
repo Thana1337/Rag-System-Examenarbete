@@ -41,18 +41,28 @@ namespace QueryService.Services
             //Retrieve top-K chunks
             var matches = await _pinecone.QueryAsync(qVec, topK: 5, @namespace: _namespace);
 
+            var relevant = matches
+            .Where(m => m.Metadata.ContainsKey("text"))
+            .ToList();
+
+            // om inget finns → returnera direkt
+            if (!relevant.Any())
+            {
+                const string noInfoMsg =
+                    "Sorry, I couldn’t find any relevant information in the provided documents.";
+                return new QueryResult(noInfoMsg, new List<string>());
+            }
+
             //Build prompt from chunk texts
 
-            var sb = new StringBuilder();
+            var sb = new StringBuilder()
 
-          
-            sb.AppendLine("You are a helpful AI assistant.  ")
-              .AppendLine("Always format your answers to be as clear and scannable as possible:")
-              .AppendLine("- Use markdown headings (e.g. `#`, `##`) for main sections")
-              .AppendLine("- Use bullet points (`-`) for lists of items or key points")
-              .AppendLine("- Use numbered steps (`1.`, `2.`, …) for any procedural instructions")
-              .AppendLine("- Use **bold** or *italic* for emphasis")
-              .AppendLine();
+                .AppendLine("You are a helpful AI assistant.")
+                .AppendLine("Only answer questions that can be answered using the provided context.")
+                .AppendLine("If the answer is not in the context, reply exactly:")
+                .AppendLine("> Sorry, I couldn’t find any relevant information.")
+                .AppendLine("Format your answer clearly using markdown headings, bullet points, or numbered steps.")
+                .AppendLine();
 
 
             foreach (var match in matches)
