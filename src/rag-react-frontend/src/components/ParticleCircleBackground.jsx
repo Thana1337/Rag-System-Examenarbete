@@ -9,7 +9,7 @@ export default function ParticleCircleBackground({
   repelStrength     = 0.4,
   particleColor     = 'rgba(255,255,255,0.8)',
   particleSize      = 1.2,
-  scrambleDuration  = 5000,              // ms
+  scrambleDuration  = 5000, 
   onScrambleComplete = () => {}
 }) {
   const canvasRef = useRef(null);
@@ -28,7 +28,6 @@ export default function ParticleCircleBackground({
     const cy   = height / 2;
     const maxR = Math.min(width, height) * circleRadiusRatio;
 
-    // 1) create particles with random start + circular target
     particles.current = Array.from({ length: particleCount }).map(() => {
       const angle = Math.random() * Math.PI * 2;
       const r     = Math.sqrt(Math.random()) * maxR;
@@ -63,23 +62,23 @@ export default function ParticleCircleBackground({
       const now     = performance.now();
       const elapsed = now - startTime.current;
       const t       = Math.min(elapsed / scrambleDuration, 1);
-      const ease    = 1 - Math.pow(1.5 - t, 5); // cubic ease-out
+      const ease    = 1 - Math.pow(1.5 - t, 5); 
 
       particles.current.forEach(p => {
         if (t < 1) {
-          // SCRAMBLE PHASE: smoothly lerp into circle
+          // SCRAMBLE PHASE
           p.x = p.initX + (p.targetX - p.initX) * ease;
           p.y = p.initY + (p.targetY - p.initY) * ease;
         } else {
-          // ONCE after intro finishes:
+        
           if (!doneRef.current) {
-            // lock perfectly on target
+            
             p.x = p.targetX;
             p.y = p.targetY;
             doneRef.current = true;
             onScrambleComplete();
           }
-          // WANDER + REPEL
+          
           p.vx += (Math.random() - 0.6) * wanderStrength;
           p.vy += (Math.random() - 0.6) * wanderStrength;
           const dx = p.x - mouse.current.x;
@@ -94,7 +93,7 @@ export default function ParticleCircleBackground({
           p.y += p.vy;
           p.vx *= 0.99;
           p.vy *= 0.99;
-          // wrap edges
+          
           if (p.x < 0) p.x += width; else if (p.x > width) p.x -= width;
           if (p.y < 0) p.y += height; else if (p.y > height) p.y -= height;
         }

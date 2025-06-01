@@ -1,4 +1,3 @@
-// src/components/MagneticGrid.jsx
 import React, { useEffect } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 
@@ -11,7 +10,6 @@ export default function MagneticGrid({
   const mouseX = useMotionValue(-9999);
   const mouseY = useMotionValue(-9999);
 
-  // update mouse position
   useEffect(() => {
     const move = ({ clientX, clientY }) => {
       mouseX.set(clientX);
@@ -23,7 +21,6 @@ export default function MagneticGrid({
 
   const vs = Array.from({ length: lineCount }, (_, i) => {
     const x = ((i + 1) * 100) / (lineCount + 1) + '%';
-    // when mouseX is within [x-threshold, x+threshold], map to offset range [maxOffset → -maxOffset]
     const offsetX = useTransform(
       mouseX,
       [0, window.innerWidth],

@@ -33,44 +33,31 @@ function Main() {
   const location    = useLocation();
   const particleAnim = useAnimation();
   const [ready, setReady] = useState(false);
-
-  // Determine if we should do the scramble intro this very first time
   const isRoot         = location.pathname === '/';
   const shouldScramble = isRoot && !hasIntroPlayed;
 
   useEffect(() => {
     if (shouldScramble) {
-      // Mark that we've played it, so we never do it again
       hasIntroPlayed = true;
-      // Prepare animation: start “zoomed in”
       particleAnim.set({ scale: 2 });
-
-      // Then animate to normal over 3s, then reveal the UI
       particleAnim
         .start({ scale: 1, transition: { duration: 1, ease: 'easeOut' } })
         .then(() => setReady(true));
     } else {
-      // Not first load or not on root → show immediately
       setReady(true);
     }
-  }, []); // <-- run ONCE on mount
+  }, []);
 
   return (
     <>
-    <motion.div
-        className="pointer-events-none fixed inset-0 z-0"
-        
-      >
-      <div
-
-        >
+    <motion.div className="pointer-events-none fixed inset-0 z-0">
+      <div>
       <ParticleCircleBackground
         particleCount={2000}
         circleRadiusRatio={0.5}
         repelRadius={100}
         repelStrength={0.7}
         particleSize={0.5}
-        
         onScrambleComplete={() => {
               hasIntroPlayed = true;
               setReady(true);

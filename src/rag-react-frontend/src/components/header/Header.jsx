@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 
@@ -10,7 +9,7 @@ export default function Header() {
     if (shouldAnimate) headerPlayed = true;
   }, [shouldAnimate]);
 
-  // match your scrambleDuration of 5s
+  //match scrambleDuration
   const delay = shouldAnimate ? 4 : 0;
 
   return (

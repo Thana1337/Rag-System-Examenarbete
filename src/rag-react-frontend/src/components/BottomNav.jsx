@@ -1,4 +1,3 @@
-// src/components/BottomNav.jsx
 import React, { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
@@ -21,14 +20,11 @@ const curtainVariants = {
   }
 };
 
-// Module‐scope flag so we only delay once
 let navPlayed = false;
 
 export default function BottomNav() {
   const controls = useAnimation();
   const navigate = useNavigate();
-
-  // Only the very first mount should animate in with delay
   const shouldAnimate = !navPlayed;
   useEffect(() => {
     if (shouldAnimate) {

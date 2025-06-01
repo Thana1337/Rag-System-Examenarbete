@@ -1,13 +1,10 @@
-// src/components/CustomCursor.jsx
 import React, { useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  // raw pointer positions
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
 
-  // stiffer, less bouncy spring
   const springConfig = { stiffness: 1500, damping: 100, mass: 0.3 };
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);

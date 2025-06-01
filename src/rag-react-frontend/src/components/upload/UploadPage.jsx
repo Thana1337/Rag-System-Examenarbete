@@ -1,4 +1,3 @@
-// src/components/UploadPage.jsx
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -11,7 +10,6 @@ export default function UploadPage() {
   const [isDragging, setIsDragging] = useState(false);
   const UPLOAD_URL                  = import.meta.env.VITE_UPLOAD_URL;
 
-  // add new files, dedupe by name+size
   const handleFiles = useCallback(newFiles => {
     const pdfs = Array.from(newFiles).filter(
       f => f.type === 'application/pdf'
@@ -45,7 +43,6 @@ export default function UploadPage() {
     setIsDragging(false);
   };
 
-  // remove a file by index
   const removeFile = index => {
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
